@@ -19,11 +19,6 @@ namespace Roommates34.Repositories
         public RoomRepository(string connectionString) : base(connectionString) { }
 
         // ...We'll add some methods shortly...
-        public List<Room> GetAll()
-        {
-            /// <summary>
-            ///  Get a list of all Rooms in the database
-            /// </summary>
             public List<Room> GetAll()
             {
                 //  We must "use" the database connection.
@@ -90,80 +85,80 @@ namespace Roommates34.Repositories
         /// <summary>
         ///  Returns a single room with the given id.
         /// </summary>
-        public Room GetById(int id)
-        {
-            using (SqlConnection conn = Connection)
-            {
-                conn.Open();
-                using (SqlCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = "SELECT Name, MaxOccupancy FROM Room WHERE Id = @id";
-                    cmd.Parameters.AddWithValue("@id", id);
-                    SqlDataReader reader = cmd.ExecuteReader();
+        //public Room GetById(int id)
+        //{
+        //    using (SqlConnection conn = Connection)
+        //    {
+        //        conn.Open();
+        //        using (SqlCommand cmd = conn.CreateCommand())
+        //        {
+        //            cmd.CommandText = "SELECT Name, MaxOccupancy FROM Room WHERE Id = @id";
+        //            cmd.Parameters.AddWithValue("@id", id);
+        //            SqlDataReader reader = cmd.ExecuteReader();
 
-                    Room room = null;
+        //            Room room = null;
 
-                    // If we only expect a single row back from the database, we don't need a while loop.
-                    if (reader.Read())
-                    {
-                        room = new Room
-                        {
-                            Id = id,
-                            Name = reader.GetString(reader.GetOrdinal("Name")),
-                            MaxOccupancy = reader.GetInt32(reader.GetOrdinal("MaxOccupancy")),
-                        };
-                    }
+        //            // If we only expect a single row back from the database, we don't need a while loop.
+        //            if (reader.Read())
+        //            {
+        //                room = new Room
+        //                {
+        //                    Id = id,
+        //                    Name = reader.GetString(reader.GetOrdinal("Name")),
+        //                    MaxOccupancy = reader.GetInt32(reader.GetOrdinal("MaxOccupancy")),
+        //                };
+        //            }
 
-                    reader.Close();
+        //            reader.Close();
 
-                    return room;
-                }
-            }
-        }
+        //            return room;
+        //        }
+        //    }
+        //}
 
-        public void Insert(Room room)
-        {
-            using (SqlConnection conn = SqlConnection)
-            {
-                conn.Open();
-                using (SqlCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"INSERT INTO Room (Name, MaxOccupancy)
-                                        OUTPUT INSERTED.Id
-                                        VALUES (@name, @maxOccupancy)";
-                    cmd.Parameters.AddWithValue("@name", room.Name);
-                    cmd.Parameters.AddWithValue("@maxOccupancy", room.MaxOccupancy);
-                    int id = (int)cmd.ExecuteScalar();
+        //public void Insert(Room room)
+        //{
+        //    using (SqlConnection conn = SqlConnection)
+        //    {
+        //        conn.Open();
+        //        using (SqlCommand cmd = conn.CreateCommand())
+        //        {
+        //            cmd.CommandText = @"INSERT INTO Room (Name, MaxOccupancy)
+        //                                OUTPUT INSERTED.Id
+        //                                VALUES (@name, @maxOccupancy)";
+        //            cmd.Parameters.AddWithValue("@name", room.Name);
+        //            cmd.Parameters.AddWithValue("@maxOccupancy", room.MaxOccupancy);
+        //            int id = (int)cmd.ExecuteScalar();
 
-                    room.Id = id;
+        //            room.Id = id;
 
-                }
-            }
+        //        }
+        //    }
 
             // when this method is finished we can look in the database and see the new room
 
-            static void InsertRoom(RoomRepository roomRepo)
-            {
-                Console.Write();
-            };
+            //static void InsertRoom(RoomRepository roomRepo)
+            //{
+            //    Console.Write("");
+            //};
 
         }
 
-        public void Update(Room room)
-        {
-            using (SqlConnection conn = Connection)
-            {
-                conn.Open();
-                using (SqlCommand cmd = conn.CreateCommand)
-                {
-                    cmd.CommandText = @"UPDATE Room
-                                        SET Name = @name,
-                                            MaxOccupancy = @maxOccupancy
-                                         WHERE Id = @id";
-                    cmd.Parameters.AddWithValue();
-                };
-            }
-        }
-    }
-}
+        //public void Update(Room room)
+        //{
+        //    using (SqlConnection conn = Connection)
+        //    {
+        //        conn.Open();
+        //        using (SqlCommand cmd = conn.CreateCommand)
+        //        {
+        //            cmd.CommandText = @"UPDATE Room
+        //                                SET Name = @name,
+        //                                    MaxOccupancy = @maxOccupancy
+        //                                 WHERE Id = @id";
+        //            cmd.Parameters.AddWithValue();
+        //        };
+        //    }
+        //}
+//    }
+//}
 

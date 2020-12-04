@@ -1,6 +1,7 @@
 ﻿using Roommates34.Models;
 using Roommates34.Repositories;
 using System;
+using System.Collections.Generic;
 
 namespace Roommates34
 {
@@ -86,7 +87,7 @@ namespace Roommates34
                 MaxOccupancy = max
             };
 
-            roomRepo.Insert(room);
+            //roomRepo.Insert(room);
 
             Console.WriteLine($"{room.Name} has been added to the database and given the ID of {room.Id}");
             Console.ReadKey();
