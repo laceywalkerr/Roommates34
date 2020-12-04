@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Roommates34.Models;
+using Roommates34.Repositories;
+using System;
 
 namespace Roommates34
 {
@@ -73,6 +75,30 @@ namespace Roommates34
         }
 
         static void ShowAllRooms(RoomRepository roomRepo)
+        {
+            Console.Write("Room Name: ");
+            string name = Console.ReadLine();
+            int max = int.Parse(Console.ReadLine());
+
+            Room room = new Room()
+            {
+                Name = name,
+                MaxOccupancy = max
+            };
+
+            roomRepo.Insert(room);
+
+            Console.WriteLine($"{room.Name} has been added to the database and given the ID of {room.Id}");
+            Console.ReadKey();
+            
+        }
+
+ //       static void DeleteRoom(RoomRepository roomRepo)
+ //       {
+ //           Console.Write("What is the ID of the room wou want to delete?);
+ //
+ //           int roomId = int.Parse(Console.WriteLine)
+ //       }
         
     }
 }

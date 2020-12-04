@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Data.SqlClient;
-using Roommates.Models;
+using Roommates34.Models;
 
 namespace Roommates34.Repositories
-{
+
 {
     /// <summary>
     ///  This class is responsible for interacting with Room data.
@@ -19,7 +19,7 @@ namespace Roommates34.Repositories
         public RoomRepository(string connectionString) : base(connectionString) { }
 
         // ...We'll add some methods shortly...
-        public List<room> GetAll()
+        public List<Room> GetAll()
         {
             /// <summary>
             ///  Get a list of all Rooms in the database
@@ -142,7 +142,28 @@ namespace Roommates34.Repositories
 
             // when this method is finished we can look in the database and see the new room
 
+            static void InsertRoom(RoomRepository roomRepo)
+            {
+                Console.Write();
+            };
+
+        }
+
+        public void Update(Room room)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand)
+                {
+                    cmd.CommandText = @"UPDATE Room
+                                        SET Name = @name,
+                                            MaxOccupancy = @maxOccupancy
+                                         WHERE Id = @id";
+                    cmd.Parameters.AddWithValue();
+                };
+            }
         }
     }
 }
-}
+
