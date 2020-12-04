@@ -10,10 +10,11 @@ namespace Roommates34
     {
         //  This is the address of the database.
         //  We define it here as a constant since it will never change.
-        private const string CONNECTION_STRING = @"server=localhost\SQLExpress;database=Roommates;integrated security=true";
+        private const string CONNECTION_STRING = @"server=localhost\SQLExpress;database=Roommates34;integrated security=true";
 
         static void Main(string[] args)
         {
+            RoomRepository roomRepo = new RoomRepository(CONNECTION_STRING);
             bool runProgram = true;
             while (runProgram)
             {
@@ -25,11 +26,37 @@ namespace Roommates34
                         // Do stuff
                         break;
                     case ("Search for room"):
-                        // Do stuff
+                        Console.Write("Room Id: ");
+                        int id = int.Parse(Console.ReadLine());
+
+                        Room room = roomRepo.GetById(id);
+
+                        Console.WriteLine($"{room.Id} - {room.Name} Max Occupancy({room.MaxOccupancy})");
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
                         break;
                     case ("Add a room"):
-                        // Do stuff
+                        Console.Write("Room name: ");
+                        string name = Console.ReadLine();
+
+                        Console.Write("Max occupancy: ");
+                        int max = int.Parse(Console.ReadLine());
+
+                        Room roomToAdd = new Room()
+                        {
+                            Name = name,
+                            MaxOccupancy = max
+                        };
+
+                        roomRepo.Insert(roomToAdd);
+
+                        Console.WriteLine($"{roomToAdd.Name} has been added and assigned an Id of {roomToAdd.Id}");
+                        Console.Write("Press any key to continue");
+                        Console.ReadKey();
                         break;
+
+
+
                     case ("Exit"):
                         runProgram = false;
                         break;
