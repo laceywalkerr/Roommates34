@@ -15,6 +15,8 @@ namespace Roommates34
         static void Main(string[] args)
         {
             RoomRepository roomRepo = new RoomRepository(CONNECTION_STRING);
+            RoommateRepository roommateRepo = new RoomRepository(CONNECTION_STRING);
+
             bool runProgram = true;
             while (runProgram)
             {
@@ -63,6 +65,17 @@ namespace Roommates34
                 }
             }
 
+        }
+
+        static void FindARoommate(RoommateRepository repo)
+        {
+            Console.WriteLine();
+            Console.Write("Roommate Id: ");
+
+            int id = int.Parse(Console.ReadLine());
+            Roommate roomate = repo.GetById(id);
+
+            Console.WriteLine($"{roommate.Firstname} {roommate.RentPortion}{ roomate.Room.Name}");
         }
 
         static string GetMenuSelection()

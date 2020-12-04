@@ -91,9 +91,34 @@ namespace Roommates34.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Name, MaxOccupancy FROM Room WHERE Id = @id";
+
+                    cmd.CommandText = @"SELECT Id, FirstName, LastName, RentPortion, MoveInDate
+                                        FROM Roommate
+                                        JOIN Room room ON room.Id = roommate.RoomId
+                                        WHERE Id - @id";
                     cmd.Parameters.AddWithValue("@id", id);
                     SqlDataReader reader = cmd.ExecuteReader();
+
+                    Roommate roommate = null;
+
+                    if (reader.Read())
+                    {
+                        roommate = new Roommate()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Firstname = reader.GetString(reader.GetOrdinal("FirstName")),
+                            Lastname = reader.GetString(reader.GetOrdinal("LastName")),
+                            MovedInDate = reader.GetDateTime(reader.GetOrdinal("MoveInDate")),
+                            Room = new Room()
+                            {
+                                Name = reader.GetString(reader.GetOrdinal("Name"))
+                            }
+                        };
+                    }
+
+                    //cmd.CommandText = "SELECT Name, MaxOccupancy FROM Room WHERE Id = @id";
+                    //cmd.Parameters.AddWithValue("@id", id);
+                    //SqlDataReader reader = cmd.ExecuteReader();
 
                     Room room = null;
 
